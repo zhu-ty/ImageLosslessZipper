@@ -31,21 +31,22 @@ int ImageZipperWriter::init(std::string fileName, WriteType type)
 	return 0;
 }
 
-int ImageZipperWriter::append(std::vector<cv::Mat> &depths)
+int ImageZipperWriter::append(std::vector<cv::Mat> &imgs)
 {
 	if (_zip == nullptr)
 	{
 		SKCommon::errorOutput("Init DepthZipper First!");
 		return -1;
 	}
-	for (int i = 0; i < depths.size(); i++)
+	for (int i = 0; i < imgs.size(); i++)
 	{
 		if (_frame > pow(10, MAX_FRAME_BUFFER_SIZE))
 			SKCommon::warningOutput(SKCommon::format("max frame size reached, maxnimum = %d, frame count = %d", pow(10, MAX_FRAME_BUFFER_SIZE), _frame));
 		//if (depths[i].type() != CV_16UC1)
 		//	SKCommon::warningOutput(DEBUG_STRING + "depth.type != CV_16UC1");
+
 		std::vector<uchar> pngdata;
-		cv::imencode(".png", depths[i], pngdata);
+		cv::imencode(".png", imgs[i], pngdata);
 		std::string formats = SKCommon::format("%%0%dd.png", MAX_FRAME_BUFFER_SIZE);
 		std::string file = SKCommon::format(formats.c_str(), _frame);
 		zip_entry_open((zip_t*)_zip, file.c_str());
@@ -57,9 +58,9 @@ int ImageZipperWriter::append(std::vector<cv::Mat> &depths)
 	return 0;
 }
 
-int ImageZipperWriter::append(cv::Mat &depths)
+int ImageZipperWriter::append(cv::Mat &img)
 {
-	return append(std::vector<cv::Mat>{depths});
+	return append(std::vector<cv::Mat>{img});
 }
 
 int ImageZipperWriter::release()

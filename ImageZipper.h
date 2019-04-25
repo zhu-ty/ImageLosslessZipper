@@ -24,8 +24,8 @@ public:
 	};
 
 	int init(std::string fileName, WriteType type = WriteType::Create);
-	int append(std::vector<cv::Mat> &depths);
-	int append(cv::Mat &depths);
+	int append(std::vector<cv::Mat> &imgs);
+	int append(cv::Mat &img);
 	int release();
 private:
 	int _frame; //Next frame to write

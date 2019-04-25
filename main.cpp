@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 		dzw.init(argv[3], (SKCommon::toLower(argv[1]) == "c") ? ImageZipperWriter::WriteType::Create : ImageZipperWriter::WriteType::Append);
 		for (int i = 0; i < files.size(); i++)
 		{
-			auto mat = cv::imread(files[i]);
+			auto mat = cv::imread(files[i], cv::IMREAD_UNCHANGED);
 			dzw.append(mat);
 		}
 		dzw.release();
