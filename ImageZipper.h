@@ -42,11 +42,13 @@ public:
 	int init(std::string fileName, int &maxFrameNum);
 	int getMaxFrameNum();
 	cv::Mat read(int frameNum);
+	cv::Mat read(int frameNum, std::string &fileName);
 	int release();
 
 private:
 	void *_zip = nullptr;
-	int _maxFrame = 0;
+	std::vector<std::string> fileList;
+
 };
 
 
