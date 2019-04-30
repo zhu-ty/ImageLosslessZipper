@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 	if (argc < 4)
 	{
-		SKCommon::infoOutput("Usage : ./DepthZipper [C,A,R] [folder] [zipFile]");
+		SKCommon::infoOutput("Usage : ./ImageLosslessZipper [C,A,R] [folder] [zipFile]");
 		return 0;
 	}
 	if (SKCommon::toLower(argv[1]) == "c" || SKCommon::toLower(argv[1]) == "a")
