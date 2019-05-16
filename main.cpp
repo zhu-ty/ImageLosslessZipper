@@ -1,5 +1,6 @@
 #include "SKCommon.hpp"
 #include "ImageZipper.h"
+#include "version.h"
 
 std::vector<std::string> CollectFiles(std::string dir, std::vector<std::string> allowedExtensions)
 {
@@ -23,6 +24,7 @@ std::vector<std::string> CollectFiles(std::string dir, std::vector<std::string> 
 
 int main(int argc, char *argv[])
 {
+	SKCommon::infoOutput("Version = %d.%d.%s", __MAJOR_VERSION__, __MINOR_VERSION__, __GIT_VERSION__);
 	//cv::Mat t0,t1,t3;
 	//t0 = imread("CUCAU1731017_CUCAU1724010.tiff", cv::IMREAD_UNCHANGED);
 	//t1 = imread("00002..32fc1.png", cv::IMREAD_UNCHANGED);
