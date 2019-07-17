@@ -12,6 +12,8 @@
 #include <opencv2/opencv.hpp>
 #define MAX_FRAME_BUFFER_SIZE 5 // 10 ^ size , 5 means 10000
 
+#define IMAGE_ZIPPER_IMAGE_FORMAT std::string(".tiff")
+
 class ImageZipperWriter
 {
 public:
@@ -24,13 +26,26 @@ public:
 	};
 
 	int init(std::string fileName, WriteType type = WriteType::Create);
-	int append(std::vector<cv::Mat> &imgs);
+	int append(std::vector<cv::Mat> &imgs, int threadCount = 1);
 	int append(cv::Mat &img);
 	int release();
+
+	int setVerbose(bool verbose);
+	//No = 0, Default = 6, Best = 9
+	int setZipCompressLevel(int level);
+	int setImgCompressionParam(std::vector<int> param = std::vector<int>());
 private:
 	int _frame; //Next frame to write
 	//zip_t *_zip = nullptr;
 	void *_zip = nullptr;
+	bool _verbose = true;
+	int _comLevel = 6;
+
+	int64_t partTimeCost = 0;
+
+	std::vector<int> _param;
+	int switchEndian16(cv::Mat &m);
+	void compressThread(std::vector<cv::Mat> &imgs, std::vector<std::vector<uchar>> &imgdatas, int startID, int stopID);
 };
 
 class ImageZipperReader
