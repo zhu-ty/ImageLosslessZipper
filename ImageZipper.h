@@ -12,8 +12,8 @@
 #include <opencv2/opencv.hpp>
 #define MAX_FRAME_BUFFER_SIZE 5 // 10 ^ size , 5 means 10000
 
-#define IMAGE_ZIPPER_IMAGE_FORMAT std::string(".tiff")
-
+//#define IMAGE_ZIPPER_IMAGE_FORMAT std::string(".tiff")
+#define IMAGE_ZIPPER_IMAGE_FORMAT std::string(".png")
 class ImageZipperWriter
 {
 public:
