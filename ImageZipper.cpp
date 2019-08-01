@@ -2,9 +2,10 @@
 #include "zip.h"
 #include "SKCommon.hpp"
 
-int ImageZipperWriter::init(std::string fileName, WriteType type)
+int ImageZipperWriter::init(std::string fileName, WriteType type, int startIdx)
 {
 	release();
+	_frame = startIdx;
 	if (type == WriteType::Append)
 	{
 		zip_t *tmpZip = zip_open(fileName.c_str(), 0, 'r');
@@ -25,8 +26,8 @@ int ImageZipperWriter::init(std::string fileName, WriteType type)
 		}
 		zip_close(tmpZip);
 	}
-	else
-		_frame = 0;
+	//else
+	//	_frame = 0;
 	_zip = zip_open(fileName.c_str(), _comLevel, (type == WriteType::Create) ? 'w' : 'a');
 	return 0;
 }
@@ -233,6 +234,11 @@ cv::Mat ImageZipperReader::read(int frameNum, std::string & fileName)
 		return cv::Mat();
 	}
 	fileName = fileList[frameNum];
+	if (fileName == "")
+	{
+		SKCommon::warningOutput("framenum = %d does not exist!", frameNum);
+		return cv::Mat();
+	}
 	void *buf;
 	size_t bufsize;
 	std::string file = fileList[frameNum];

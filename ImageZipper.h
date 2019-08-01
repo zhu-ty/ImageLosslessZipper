@@ -25,7 +25,7 @@ public:
 		Append = 1
 	};
 
-	int init(std::string fileName, WriteType type = WriteType::Create);
+	int init(std::string fileName, WriteType type = WriteType::Create, int startIdx = 0);
 	int append(std::vector<cv::Mat> &imgs, int threadCount = 1);
 	int append(cv::Mat &img);
 	int release();
